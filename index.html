@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geoinsight Surveying - GIS Analyst & Developer Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for Inter font and smooth scrolling */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f3f4f6; /* Light gray background */
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Style for section titles underline */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 96px; /* w-24 */
+            height: 4px; /* h-1 */
+            background-color: #14b8a6; /* teal-500 */
+            border-radius: 9999px; /* rounded-full */
+            margin: 0 auto;
+            margin-top: 1rem; /* mb-4 equivalent for visual separation */
+        }
+        .nav-link:hover {
+            color: #bfdbfe; /* blue-200 */
+        }
+        .btn-primary {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 2rem; /* py-3 px-8 */
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8; /* blue-700 */
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: #14b8a6; /* teal-500 */
+            color: white;
+            font-weight: bold;
+            padding: 0.75rem 2rem; /* py-3 px-8 */
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-secondary:hover {
+            background-color: #0d9488; /* teal-600 */
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="bg-gradient-to-r from-blue-600 to-teal-500 p-4 shadow-lg sticky top-0 z-50 rounded-b-xl">
+        <div class="container mx-auto flex justify-between items-center flex-wrap">
+            <div class="text-white text-2xl font-bold tracking-wide">
+                Geoinsight Surveying
+            </div>
+            <button id="navbar-toggle" class="text-white block lg:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path id="navbar-toggle-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+            <div id="navbar-links" class="w-full lg:flex lg:items-center lg:w-auto hidden">
+                <ul class="lg:flex items-center justify-between text-base pt-4 lg:pt-0">
+                    <li><a href="#home" class="block lg:inline-block text-white nav-link px-3 py-2 rounded-lg transition duration-300 ease-in-out">Home</a></li>
+                    <li><a href="#about" class="block lg:inline-block text-white nav-link px-3 py-2 rounded-lg transition duration-300 ease-in-out">About</a></li>
+                    <li><a href="#skills" class="block lg:inline-block text-white nav-link px-3 py-2 rounded-lg transition duration-300 ease-in-out">Skills</a></li>
+                    <li><a href="#projects" class="block lg:inline-block text-white nav-link px-3 py-2 rounded-lg transition duration-300 ease-in-out">Projects</a></li>
+                    <li><a href="#contact" class="block lg:inline-block text-white nav-link px-3 py-2 rounded-lg transition duration-300 ease-in-out">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow">
+        <!-- Home Section -->
+        <section id="home" class="py-16 px-4 md:px-8 lg:px-16 bg-gray-50 min-h-screen flex flex-col justify-center items-center">
+            <div class="container mx-auto text-center max-w-3xl">
+                <h2 class="text-4xl font-extrabold text-blue-800 mb-8 section-title">Welcome to Geoinsight Surveying</h2>
+                <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+                    Your dedicated partner in cutting-edge GIS analysis and innovative geospatial development.
+                    We transform complex data into actionable insights and robust solutions.
+                </p>
+                <div class="flex justify-center space-x-6">
+                    <a href="#projects" class="btn-primary">Explore Projects</a>
+                    <a href="#contact" class="btn-secondary">Get in Touch</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-16 px-4 md:px-8 lg:px-16 bg-white min-h-screen flex flex-col justify-center items-center">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-extrabold text-blue-800 mb-12 text-center section-title">About Geoinsight Surveying</h2>
+                <div class="flex flex-col lg:flex-row items-center lg:space-x-12 max-w-4xl mx-auto">
+                    <div class="lg:w-1/3 mb-8 lg:mb-0">
+                        <img
+                            src="https://placehold.co/400x400/E0F2F7/000000?text=Your+Profile"
+                            alt="Profile"
+                            class="rounded-full shadow-xl border-4 border-teal-400 w-64 h-64 mx-auto object-cover"
+                        />
+                    </div>
+                    <div class="lg:w-2/3 text-gray-700 text-lg leading-relaxed">
+                        <p class="mb-4">
+                            Geoinsight Surveying is led by a passionate GIS professional with expertise in both
+                            Geographic Information Systems analysis and full-stack geospatial development.
+                            My journey involves leveraging spatial data to solve real-world problems,
+                            from environmental monitoring to urban planning and infrastructure development.
+                        </p>
+                        <p class="mb-4">
+                            As a GIS Analyst, I excel at data acquisition, processing, visualization,
+                            and conducting in-depth spatial analysis to uncover patterns and trends.
+                            My skills include advanced cartography, remote sensing interpretation,
+                            and statistical analysis of geographic data.
+                        </p>
+                        <p>
+                            As a GIS Developer, I build robust and scalable geospatial applications,
+                            integrating various mapping APIs, databases, and programming languages.
+                            I am proficient in developing custom tools, web mapping applications,
+                            and automating GIS workflows to enhance efficiency and accessibility of spatial information.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-16 px-4 md:px-8 lg:px-16 bg-gray-50 min-h-screen flex flex-col justify-center items-center">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-extrabold text-blue-800 mb-12 text-center section-title">My Skills</h2>
+                <div id="skills-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-5xl mx-auto">
+                    <!-- Skills will be loaded here by JavaScript -->
+                    <p class="text-center text-gray-600 col-span-full">Loading skills...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-16 px-4 md:px-8 lg:px-16 bg-white min-h-screen flex flex-col justify-center items-center">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-extrabold text-blue-800 mb-12 text-center section-title">My Projects</h2>
+                <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full max-w-6xl mx-auto">
+                    <!-- Projects will be loaded here by JavaScript -->
+                    <p class="text-center text-gray-600 col-span-full">Loading projects...</p>
+                </div>
+                <div class="mt-12 text-center text-gray-700">
+                    <!-- GitHub Gist embed script -->
+                    <script src="https://gist.github.com/octocat/6a40e1180d75a133d596.js"></script>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 px-4 md:px-8 lg:px-16 bg-gray-50 min-h-screen flex flex-col justify-center items-center">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-extrabold text-blue-800 mb-12 text-center section-title">Get in Touch</h2>
+                <div class="w-full max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md border border-blue-100">
+                    <p class="text-center text-gray-700 mb-6 text-lg">
+                        Have a project in mind or just want to say hello? Fill out the form below!
+                    </p>
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-gray-800 text-sm font-medium mb-2">
+                                Name
+                            </label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-800 text-sm font-medium mb-2">
+                                Email
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-800 text-sm font-medium mb-2">
+                                Message
+                            </label>
+                            <textarea
+                                id="message"
+                                name="message"
+                                rows="5"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                required
+                            ></textarea>
+                        </div>
+                        <button
+                            type="submit"
+                            id="submit-button"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        >
+                            Send Message
+                        </button>
+                        <div id="form-status" class="text-center mt-4"></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4 md:px-8 lg:px-16 text-center rounded-t-xl">
+        <div class="container mx-auto">
+            <p class="mb-4 text-lg">&copy; <span id="current-year"></span> Geoinsight Surveying. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        console.log("Script block started."); // Debugging: Check if script starts execution
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js"; // Import getAnalytics
+
+        // Firebase Configuration and Initialization
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+        let app;
+        let db;
+        let auth;
+        let analytics; // Declare analytics variable
+        let userId;
+        let isAuthReady = false;
+
+        // Initialize Firebase only if config is available
+        if (Object.keys(firebaseConfig).length === 0) {
+            console.error("Firebase config is missing. Dynamic content (skills, projects, contact form) will not function.");
+            // Display a message on the page if Firebase config is missing
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log("DOMContentLoaded fired - Firebase config missing branch."); // Debugging: Check DOMContentLoaded in this branch
+                const skillsContainer = document.getElementById('skills-container');
+                const projectsContainer = document.getElementById('projects-container');
+                const contactFormStatus = document.getElementById('form-status');
+
+                if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase not configured. Skills cannot be loaded.</p>';
+                if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase not configured. Projects cannot be loaded.</p>';
+                if (contactFormStatus) contactFormStatus.innerHTML = '<p class="text-red-500">Firebase not configured. Contact form disabled.</p>';
+                const submitButton = document.getElementById('submit-button');
+                if (submitButton) submitButton.disabled = true;
+            });
+        } else {
+            try { // Debugging: Wrap Firebase initialization in try-catch
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                analytics = getAnalytics(app); // Initialize analytics
+                console.log("Firebase app, db, auth, analytics initialized."); // Debugging: Confirm initialization
+
+                // Authenticate user
+                const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+                const signInUser = async () => {
+                    try {
+                        if (initialAuthToken) {
+                            await signInWithCustomToken(auth, initialAuthToken);
+                            console.log("Signed in with custom token."); // Debugging: Confirm custom token sign-in
+                        } else {
+                            await signInAnonymously(auth);
+                            console.log("Signed in anonymously."); // Debugging: Confirm anonymous sign-in
+                        }
+                    } catch (error) {
+                        console.error("Firebase authentication error:", error);
+                        // Critical error: if auth fails, mark Firebase as not ready for dynamic content
+                        isAuthReady = false;
+                        // Update UI to reflect failure to load dynamic content
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const skillsContainer = document.getElementById('skills-container');
+                            const projectsContainer = document.getElementById('projects-container');
+                            const contactFormStatus = document.getElementById('form-status');
+                            if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Authentication failed. Cannot load skills.</p>';
+                            if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Authentication failed. Cannot load projects.</p>';
+                            if (contactFormStatus) contactFormStatus.innerHTML = '<p class="text-red-500">Authentication failed. Contact form disabled.</p>';
+                            const submitButton = document.getElementById('submit-button');
+                            if (submitButton) submitButton.disabled = true;
+                        });
+                    }
+                };
+
+                // Listen for auth state changes
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Auth state changed: User logged in. User ID:", userId); // Debugging: User ID
+                    } else {
+                        userId = crypto.randomUUID(); // Fallback for truly anonymous or if sign-in fails
+                        console.log("Auth state changed: No user, generated anonymous ID:", userId); // Debugging: Anonymous ID
+                    }
+                    isAuthReady = true;
+                    console.log("Firebase Auth Ready. User ID:", userId);
+                    // After auth is ready, load dynamic content
+                    loadSkills();
+                    loadProjects();
+                });
+
+                signInUser(); // Initiate sign-in
+            } catch (initError) {
+                console.error("Firebase initialization failed:", initError);
+                // If initialization itself fails, display a message
+                document.addEventListener('DOMContentLoaded', () => {
+                    const skillsContainer = document.getElementById('skills-container');
+                    const projectsContainer = document.getElementById('projects-container');
+                    const contactFormStatus = document.getElementById('form-status');
+                    if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase initialization failed. Skills cannot be loaded.</p>';
+                    if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase initialization failed. Projects cannot be loaded.</p>';
+                    if (contactFormStatus) contactFormStatus.innerHTML = '<p class="text-red-500">Firebase initialization failed. Contact form disabled.</p>';
+                    const submitButton = document.getElementById('submit-button');
+                    if (submitButton) submitButton.disabled = true;
+                });
+            }
+        }
+
+        // --- Navigation Toggle ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded fired - Main script part."); // Debugging: Confirm DOMContentLoaded
+            const navbarToggle = document.getElementById('navbar-toggle');
+            const navbarLinks = document.getElementById('navbar-links');
+            const navbarToggleIcon = document.getElementById('navbar-toggle-icon');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            if (navbarToggle && navbarLinks && navbarToggleIcon) {
+                navbarToggle.addEventListener('click', () => {
+                    navbarLinks.classList.toggle('hidden');
+                    // Toggle icon
+                    if (navbarLinks.classList.contains('hidden')) {
+                        navbarToggleIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburger
+                    } else {
+                        navbarToggleIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // X
+                    }
+                });
+            }
+
+            // Close navbar on link click for mobile
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navbarLinks && !navbarLinks.classList.contains('hidden')) {
+                        navbarLinks.classList.add('hidden');
+                        if (navbarToggleIcon) {
+                            navbarToggleIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Reset to Hamburger
+                        }
+                    }
+                });
+            });
+
+            // Update current year in footer
+            const currentYearSpan = document.getElementById('current-year');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+        });
+
+        // --- Load Skills from Firestore ---
+        async function loadSkills() {
+            console.log("Attempting to load skills..."); // Debugging: Check if loadSkills is called
+            const skillsContainer = document.getElementById('skills-container');
+            if (!db || !isAuthReady || !skillsContainer) {
+                if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase not ready or container missing. Cannot load skills.</p>';
+                console.log("loadSkills: Firebase not ready or container missing."); // Debugging: Reason for not loading
+                return;
+            }
+
+            const collectionPath = `artifacts/${appId}/public/data/skills`;
+            const skillsRef = collection(db, collectionPath);
+
+            try {
+                // Seed data if collection is empty
+                const snapshot = await getDocs(skillsRef);
+                if (snapshot.empty) {
+                    console.log("Seeding initial skills data...");
+                    await addDoc(skillsRef, { name: "ArcGIS Pro", category: "Software" });
+                    await addDoc(skillsRef, { name: "QGIS", category: "Software" });
+                    await addDoc(skillsRef, { name: "Python (Geopandas, GDAL)", category: "Programming" });
+                    await addDoc(skillsRef, { name: "JavaScript (Leaflet, OpenLayers)", category: "Programming" });
+                    await addDoc(skillsRef, { name: "PostgreSQL/PostGIS", category: "Databases" });
+                    await addDoc(skillsRef, { name: "Remote Sensing", category: "Analysis" });
+                    await addDoc(skillsRef, { name: "Spatial Analysis", category: "Analysis" });
+                    await addDoc(skillsRef, { name: "Web Mapping", category: "Development" });
+                    await addDoc(skillsRef, { name: "Data Visualization", category: "Analysis" });
+                    await addDoc(skillsRef, { name: "Drone Mapping", category: "Data Acquisition" });
+                    console.log("Initial skills data seeded."); // Debugging: Confirm seeding
+                }
+            } catch (seedError) {
+                console.error("Error seeding skills data:", seedError);
+                // Continue to try loading, but acknowledge seed failed
+            }
+
+
+            onSnapshot(query(skillsRef), (snapshot) => {
+                try {
+                    const skillsData = snapshot.docs.map(doc => doc.data());
+                    if (skillsData.length === 0) {
+                        skillsContainer.innerHTML = '<p class="text-center text-gray-600 col-span-full">No skills added yet. Add some from the database!</p>';
+                        return;
+                    }
+
+                    const categories = [...new Set(skillsData.map(skill => skill.category))];
+                    let htmlContent = '';
+                    categories.forEach(category => {
+                        htmlContent += `
+                            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out border border-blue-100">
+                                <h3 class="text-2xl font-semibold text-blue-700 mb-4 border-b-2 border-teal-300 pb-2">${category}</h3>
+                                <ul class="list-disc pl-5 text-gray-700">
+                        `;
+                        skillsData.filter(skill => skill.category === category).forEach(skill => {
+                            htmlContent += `<li class="mb-2 text-lg">${skill.name}</li>`;
+                        });
+                        htmlContent += `
+                                </ul>
+                            </div>
+                        `;
+                    });
+                    skillsContainer.innerHTML = htmlContent;
+                    console.log("Skills loaded and rendered."); // Debugging: Confirm rendering
+                } catch (err) {
+                    console.error("Error rendering skills:", err);
+                    skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Failed to load skills.</p>';
+                }
+            }, (err) => {
+                console.error("Snapshot listener error for skills:", err);
+                skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Failed to subscribe to skills updates.</p>';
+            });
+        }
+
+        // --- Load Projects from Firestore ---
+        async function loadProjects() {
+            console.log("Attempting to load projects..."); // Debugging: Check if loadProjects is called
+            const projectsContainer = document.getElementById('projects-container');
+            if (!db || !isAuthReady || !projectsContainer) {
+                if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase not ready or container missing. Cannot load projects.</p>';
+                console.log("loadProjects: Firebase not ready or container missing."); // Debugging: Reason for not loading
+                return;
+            }
+
+            const collectionPath = `artifacts/${appId}/public/data/projects`;
+            const projectsRef = collection(db, collectionPath);
+
+            try {
+                // Seed data if collection is empty
+                const snapshot = await getDocs(projectsRef);
+                if (snapshot.empty) {
+                    console.log("Seeding initial projects data...");
+                    await addDoc(projectsRef, {
+                        title: "Urban Green Space Analysis",
+                        description: "Analyzed urban green space distribution and accessibility using satellite imagery and demographic data.",
+                        imageUrl: "https://placehold.co/600x400/C8E6C9/000000?text=Urban+Green",
+                        link: "#"
+                    });
+                    await addDoc(projectsRef, {
+                        title: "Web-Based Flood Risk Viewer",
+                        description: "Developed an interactive web map application to visualize flood risk zones and vulnerable populations.",
+                        imageUrl: "https://placehold.co/600x400/B3E5FC/000000?text=Flood+Risk",
+                        link: "#"
+                    });
+                    await addDoc(projectsRef, {
+                        title: "Automated Land Cover Classification",
+                        description: "Implemented a Python script using machine learning to automate land cover classification from aerial photos.",
+                        imageUrl: "https://placehold.co/600x400/FFECB3/000000?text=Land+Cover",
+                        link: "#"
+                    });
+                    console.log("Initial projects data seeded."); // Debugging: Confirm seeding
+                }
+            } catch (seedError) {
+                console.error("Error seeding projects data:", seedError);
+                // Continue to try loading, but acknowledge seed failed
+            }
+
+
+            onSnapshot(query(projectsRef), (snapshot) => {
+                try {
+                    const projectsData = snapshot.docs.map(doc => doc.data());
+                    if (projectsData.length === 0) {
+                        projectsContainer.innerHTML = '<p class="text-center text-gray-600 col-span-full">No projects added yet. Add some from the database!</p>';
+                        return;
+                    }
+
+                    let htmlContent = '';
+                    projectsData.forEach(project => {
+                        htmlContent += `
+                            <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out border border-blue-100">
+                                <img
+                                    src="${project.imageUrl}"
+                                    alt="${project.title}"
+                                    class="w-full h-48 object-cover"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/000000?text=Image+Missing';"
+                                />
+                                <div class="p-6">
+                                    <h3 class="text-xl font-semibold text-blue-700 mb-3">${project.title}</h3>
+                                    <p class="text-gray-600 text-base mb-4">${project.description}</p>
+                                    ${project.link ? `
+                                        <a
+                                            href="${project.link}"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="inline-flex items-center text-teal-600 hover:text-teal-800 font-medium transition duration-300 ease-in-out"
+                                        >
+                                            View Project
+                                            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    projectsContainer.innerHTML = htmlContent;
+                    console.log("Projects loaded and rendered."); // Debugging: Confirm rendering
+                } catch (err) {
+                    console.error("Error rendering projects:", err);
+                    projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Failed to load projects.</p>';
+                }
+            }, (err) => {
+                console.error("Snapshot listener error for projects:", err);
+                projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Failed to subscribe to projects updates.</p>';
+            });
+        }
+
+        // --- Contact Form Submission ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const formStatus = document.getElementById('form-status');
+                    const submitButton = document.getElementById('submit-button');
+
+                    if (!db || !isAuthReady) {
+                        if (formStatus) formStatus.innerHTML = '<p class="text-red-500">Firebase not initialized or authenticated. Cannot send message.</p>';
+                        console.log("Contact form submission: Firebase not ready."); // Debugging: Reason for not submitting
+                        return;
+                    }
+
+                    if (submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.textContent = 'Sending...';
+                    }
+                    if (formStatus) formStatus.innerHTML = ''; // Clear previous status
+
+                    const formData = {
+                        name: document.getElementById('name')?.value || '',
+                        email: document.getElementById('email')?.value || '',
+                        message: document.getElementById('message')?.value || '',
+                        timestamp: new Date(),
+                        userId: userId // Store the user ID who sent the message
+                    };
+
+                    try {
+                        const collectionPath = `artifacts/${appId}/public/data/messages`;
+                        await addDoc(collection(db, collectionPath), formData);
+                        if (formStatus) formStatus.innerHTML = '<p class="text-green-600">Message sent successfully!</p>';
+                        if (contactForm) contactForm.reset(); // Clear form
+                        setTimeout(() => { if (formStatus) formStatus.innerHTML = ''; }, 3000); // Clear status after 3 seconds
+                        console.log("Contact message sent successfully."); // Debugging: Confirm message sent
+                    } catch (error) {
+                        console.error("Error sending message:", error);
+                        if (formStatus) formStatus.innerHTML = '<p class="text-red-500">Failed to send message. Please try again.</p>';
+                    } finally {
+                        if (submitButton) {
+                            submitButton.disabled = false;
+                            submitButton.textContent = 'Send Message';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
