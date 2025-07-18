@@ -1,0 +1,596 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1894.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 21.0px; font: 14.0px Menlo; color: #000000; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 21.0px; font: 14.0px Menlo; color: #000000; -webkit-text-stroke: #000000; min-height: 16.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 21.0px; font: 14.0px Menlo; color: #4d5055; -webkit-text-stroke: #4d5055}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 21.0px; font: 14.0px Menlo; color: #18702b; -webkit-text-stroke: #18702b}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 21.0px; font: 14.0px Menlo; color: #6f0ec3; -webkit-text-stroke: #6f0ec3}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 21.0px; font: 14.0px Menlo; color: #0e6e6d; -webkit-text-stroke: #0e6e6d}
+    span.s1 {font-kerning: none; color: #6f0ec3; background-color: #ecf1f7; -webkit-text-stroke: 0px #6f0ec3}
+    span.s2 {font-kerning: none; background-color: #ecf1f7}
+    span.s3 {font-kerning: none; color: #0e6e6d; background-color: #ecf1f7; -webkit-text-stroke: 0px #0e6e6d}
+    span.s4 {font-kerning: none; color: #18702b; background-color: #ecf1f7; -webkit-text-stroke: 0px #18702b}
+    span.s5 {font-kerning: none; color: #4d5055; background-color: #ecf1f7; -webkit-text-stroke: 0px #4d5055}
+    span.s6 {font-kerning: none}
+    span.s7 {font-kerning: none; color: #000000; background-color: #ecf1f7; -webkit-text-stroke: 0px #000000}
+    span.s8 {font-kerning: none; color: #a4450b; background-color: #ecf1f7; -webkit-text-stroke: 0px #a4450b}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">import</span><span class="s2"> </span><span class="s3">React</span><span class="s2">, { useState, useEffect, createContext, useContext } </span><span class="s1">from</span><span class="s2"> </span><span class="s4">'react'</span><span class="s2">;</span></p>
+<p class="p1"><span class="s1">import</span><span class="s2"> { initializeApp } </span><span class="s1">from</span><span class="s2"> </span><span class="s4">'firebase/app'</span><span class="s2">;</span></p>
+<p class="p1"><span class="s1">import</span><span class="s2"> { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } </span><span class="s1">from</span><span class="s2"> </span><span class="s4">'firebase/auth'</span><span class="s2">;</span></p>
+<p class="p1"><span class="s1">import</span><span class="s2"> { getFirestore, collection, addDoc, onSnapshot, query, doc, setDoc, getDocs } </span><span class="s1">from</span><span class="s2"> </span><span class="s4">'firebase/firestore'</span><span class="s2">; </span><span class="s5">// Added getDocs here</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// --- Firebase Context ---</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">FirebaseContext</span><span class="s2"> = createContext(</span><span class="s1">null</span><span class="s2">);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">FirebaseProvider</span><span class="s2"> = ({ children }) =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [firebaseApp, setFirebaseApp] = useState(</span><span class="s1">null</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [db, setDb] = useState(</span><span class="s1">null</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [auth, setAuth] = useState(</span><span class="s1">null</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [userId, setUserId] = useState(</span><span class="s1">null</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [isAuthReady, setIsAuthReady] = useState(</span><span class="s1">false</span><span class="s2">);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>useEffect(() =&gt; {</span></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s2">// Initialize Firebase</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> appId = </span><span class="s1">typeof</span><span class="s2"> __app_id !== </span><span class="s4">'undefined'</span><span class="s2"> ? __app_id : </span><span class="s4">'default-app-id'</span><span class="s2">;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> firebaseConfig = </span><span class="s1">typeof</span><span class="s2"> __firebase_config !== </span><span class="s4">'undefined'</span><span class="s2"> ? </span><span class="s3">JSON</span><span class="s2">.parse(__firebase_config) : {};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">if</span><span class="s2"> (</span><span class="s3">Object</span><span class="s2">.keys(firebaseConfig).length === </span><span class="s8">0</span><span class="s2">) {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>console.error(</span><span class="s2">"Firebase config is missing. Please ensure __firebase_config is provided."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">return</span><span class="s2">;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> app = initializeApp(firebaseConfig);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> firestore = getFirestore(app);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> authentication = getAuth(app);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setFirebaseApp(app);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setDb(firestore);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setAuth(authentication);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s2">// Sign in anonymously or with custom token</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> initialAuthToken = </span><span class="s1">typeof</span><span class="s2"> __initial_auth_token !== </span><span class="s4">'undefined'</span><span class="s2"> ? __initial_auth_token : </span><span class="s1">null</span><span class="s2">;</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> signInUser = </span><span class="s1">async</span><span class="s2"> () =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">try</span><span class="s2"> {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">if</span><span class="s2"> (initialAuthToken) {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s1">await</span><span class="s2"> signInWithCustomToken(authentication, initialAuthToken);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>} </span><span class="s1">else</span><span class="s2"> {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s1">await</span><span class="s2"> signInAnonymously(authentication);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>} </span><span class="s1">catch</span><span class="s2"> (error) {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>console.error(</span><span class="s2">"Firebase authentication error:"</span><span class="s7">, error);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s2">// Listen for auth state changes</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> unsubscribe = onAuthStateChanged(authentication, (user) =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">if</span><span class="s2"> (user) {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>setUserId(user.uid);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>} </span><span class="s1">else</span><span class="s2"> {</span></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">        </span></span><span class="s2">// If no user, generate a random ID for anonymous use (though signInAnonymously should provide one)</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>setUserId(crypto.randomUUID());</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>}</span></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">      </span>setIsAuthReady(</span><span class="s1">true</span><span class="s7">); </span><span class="s2">// Mark auth as ready after initial check</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>});</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">    </span>signInUser(); </span><span class="s2">// Initiate sign-in</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s2">// Cleanup subscription on unmount</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">return</span><span class="s2"> () =&gt; unsubscribe();</span></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">  </span>}, []); </span><span class="s2">// Run only once on component mount</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;</span><span class="s3">FirebaseContext</span><span class="s2">.</span><span class="s3">Provider</span><span class="s2"> value={{ firebaseApp, db, auth, userId, isAuthReady }}&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>{children}</span></p>
+<p class="p6"><span class="s7"><span class="Apple-converted-space">    </span>&lt;/</span><span class="s2">FirebaseContext</span><span class="s7">.</span><span class="s2">Provider</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
+<p class="p1"><span class="s2">};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// --- Custom Hook to use Firebase Context ---</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> useFirebase = () =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> context = useContext(</span><span class="s3">FirebaseContext</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">if</span><span class="s2"> (!context) {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s1">throw</span><span class="s7"> </span><span class="s1">new</span><span class="s7"> </span><span class="s3">Error</span><span class="s7">(</span><span class="s2">'useFirebase must be used within a FirebaseProvider'</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">return</span><span class="s2"> context;</span></p>
+<p class="p1"><span class="s2">};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// --- Components ---</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// Navbar Component</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">Navbar</span><span class="s2"> = ({ scrollToSection }) =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [isOpen, setIsOpen] = useState(</span><span class="s1">false</span><span class="s2">);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;nav className=</span><span class="s2">"bg-gradient-to-r from-blue-600 to-teal-500 p-4 shadow-lg sticky top-0 z-50 rounded-b-xl"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"container mx-auto flex justify-between items-center flex-wrap"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;div className=</span><span class="s2">"text-white text-2xl font-bold font-inter tracking-wide"</span><span class="s7">&gt;</span></p>
+<p class="p6"><span class="s7"><span class="Apple-converted-space">          </span></span><span class="s2">Geoinsight</span><span class="s7"> </span><span class="s2">Surveying</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;button</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>onClick={() =&gt; setIsOpen(!isOpen)}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>className=</span><span class="s2">"text-white block lg:hidden focus:outline-none"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>&lt;svg className=</span><span class="s2">"w-6 h-6"</span><span class="s7"> fill=</span><span class="s2">"none"</span><span class="s7"> stroke=</span><span class="s2">"currentColor"</span><span class="s7"> viewBox=</span><span class="s2">"0 0 24 24"</span><span class="s7"> xmlns=</span><span class="s2">"http://www.w3.org/2000/svg"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;path strokeLinecap=</span><span class="s4">"round"</span><span class="s2"> strokeLinejoin=</span><span class="s4">"round"</span><span class="s2"> strokeWidth=</span><span class="s4">"2"</span><span class="s2"> d={isOpen ? </span><span class="s4">"M6 18L18 6M6 6l12 12"</span><span class="s2"> : </span><span class="s4">"M4 6h16M4 12h16M4 18h16"</span><span class="s2">}&gt;&lt;/path&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/svg&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;div className={</span><span class="s2">`w-full lg:flex lg:items-center lg:w-auto </span><span class="s7">${isOpen ? </span><span class="s2">'block'</span><span class="s7"> : </span><span class="s2">'hidden'</span><span class="s7">}</span><span class="s2">`</span><span class="s7">}&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>&lt;ul className=</span><span class="s2">"lg:flex items-center justify-between text-base pt-4 lg:pt-0"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;button</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>onClick={() =&gt; { scrollToSection(</span><span class="s4">'home'</span><span class="s2">); setIsOpen(</span><span class="s1">false</span><span class="s2">); }}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>className=</span><span class="s2">"block lg:inline-block text-white hover:text-blue-200 px-3 py-2 rounded-lg transition duration-300 ease-in-out"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span></span><span class="s3">Home</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;button</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>onClick={() =&gt; { scrollToSection(</span><span class="s4">'about'</span><span class="s2">); setIsOpen(</span><span class="s1">false</span><span class="s2">); }}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>className=</span><span class="s2">"block lg:inline-block text-white hover:text-blue-200 px-3 py-2 rounded-lg transition duration-300 ease-in-out"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span></span><span class="s3">About</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;button</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>onClick={() =&gt; { scrollToSection(</span><span class="s4">'skills'</span><span class="s2">); setIsOpen(</span><span class="s1">false</span><span class="s2">); }}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>className=</span><span class="s2">"block lg:inline-block text-white hover:text-blue-200 px-3 py-2 rounded-lg transition duration-300 ease-in-out"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span></span><span class="s3">Skills</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;button</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>onClick={() =&gt; { scrollToSection(</span><span class="s4">'projects'</span><span class="s2">); setIsOpen(</span><span class="s1">false</span><span class="s2">); }}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>className=</span><span class="s2">"block lg:inline-block text-white hover:text-blue-200 px-3 py-2 rounded-lg transition duration-300 ease-in-out"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span></span><span class="s3">Projects</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;button</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>onClick={() =&gt; { scrollToSection(</span><span class="s4">'contact'</span><span class="s2">); setIsOpen(</span><span class="s1">false</span><span class="s2">); }}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">                </span>className=</span><span class="s2">"block lg:inline-block text-white hover:text-blue-200 px-3 py-2 rounded-lg transition duration-300 ease-in-out"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span></span><span class="s3">Contact</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/ul&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
+<p class="p1"><span class="s2">};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// Section Template</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">Section</span><span class="s2"> = ({ id, title, children }) =&gt; (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">  </span>&lt;section id={id} className=</span><span class="s2">"py-16 px-4 md:px-8 lg:px-16 bg-gray-50 min-h-screen flex flex-col justify-center items-center"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;div className=</span><span class="s4">"container mx-auto"</span><span class="s2">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;h2 className=</span><span class="s2">"text-4xl font-extrabold text-center text-blue-800 mb-12 relative pb-4"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>{title}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;span className=</span><span class="s2">"absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-teal-500 rounded-full"</span><span class="s7">&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>{children}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>&lt;/section&gt;</span></p>
+<p class="p1"><span class="s2">);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// Home Section</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">Home</span><span class="s2"> = () =&gt; (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">  </span>&lt;</span><span class="s3">Section</span><span class="s7"> id=</span><span class="s2">"home"</span><span class="s7"> title=</span><span class="s2">"Welcome to Geoinsight Surveying"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;div className=</span><span class="s2">"text-center max-w-3xl mx-auto"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;p className=</span><span class="s2">"text-xl text-gray-700 mb-8 leading-relaxed"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s3">Your</span><span class="s2"> dedicated partner </span><span class="s1">in</span><span class="s2"> cutting-edge </span><span class="s3">GIS</span><span class="s2"> analysis and innovative geospatial development.</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s3">We</span><span class="s2"> transform complex data into actionable insights and robust solutions.</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/p&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"flex justify-center space-x-6"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;button className=</span><span class="s2">"bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"</span><span class="s7">&gt;</span></p>
+<p class="p6"><span class="s7"><span class="Apple-converted-space">          </span></span><span class="s2">Explore</span><span class="s7"> </span><span class="s2">Projects</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;button className=</span><span class="s2">"bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transform hover:scale-105 transition duration-300 ease-in-out"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">Get</span><span class="s2"> </span><span class="s1">in</span><span class="s2"> </span><span class="s3">Touch</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p6"><span class="s7"><span class="Apple-converted-space">  </span>&lt;/</span><span class="s2">Section</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2">);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// About Section</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">About</span><span class="s2"> = () =&gt; (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">  </span>&lt;</span><span class="s3">Section</span><span class="s7"> id=</span><span class="s2">"about"</span><span class="s7"> title=</span><span class="s2">"About Geoinsight Surveying"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;div className=</span><span class="s2">"flex flex-col lg:flex-row items-center lg:space-x-12 max-w-4xl mx-auto"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"lg:w-1/3 mb-8 lg:mb-0"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;img</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>src=</span><span class="s2">"https://placehold.co/400x400/E0F2F7/000000?text=Your+Profile"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>alt=</span><span class="s4">"Profile"</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>className=</span><span class="s2">"rounded-full shadow-xl border-4 border-teal-400 w-64 h-64 mx-auto object-cover"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>/&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"lg:w-2/3 text-gray-700 text-lg leading-relaxed"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;p className=</span><span class="s4">"mb-4"</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">Geoinsight</span><span class="s2"> </span><span class="s3">Surveying</span><span class="s2"> </span><span class="s1">is</span><span class="s2"> led by a passionate </span><span class="s3">GIS</span><span class="s2"> professional </span><span class="s1">with</span><span class="s2"> expertise </span><span class="s1">in</span><span class="s2"> both</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">Geographic</span><span class="s2"> </span><span class="s3">Information</span><span class="s2"> </span><span class="s3">Systems</span><span class="s2"> analysis and full-stack geospatial development.</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">My</span><span class="s2"> journey involves leveraging spatial data to solve real-world problems,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s1">from</span><span class="s2"> environmental monitoring to urban planning and infrastructure development.</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;p className=</span><span class="s4">"mb-4"</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">As</span><span class="s2"> a </span><span class="s3">GIS</span><span class="s2"> </span><span class="s3">Analyst</span><span class="s2">, </span><span class="s3">I</span><span class="s2"> excel at data acquisition, processing, visualization,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>and conducting </span><span class="s1">in</span><span class="s2">-depth spatial analysis to uncover patterns and trends.</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">My</span><span class="s2"> skills include advanced cartography, remote sensing interpretation,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>and statistical analysis </span><span class="s1">of</span><span class="s2"> geographic data.</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">As</span><span class="s2"> a </span><span class="s3">GIS</span><span class="s2"> </span><span class="s3">Developer</span><span class="s2">, </span><span class="s3">I</span><span class="s2"> build robust and scalable geospatial applications,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>integrating various mapping </span><span class="s3">APIs</span><span class="s2">, databases, and programming languages.</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">I</span><span class="s2"> am proficient </span><span class="s1">in</span><span class="s2"> developing custom tools, web mapping applications,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>and automating </span><span class="s3">GIS</span><span class="s2"> workflows to enhance efficiency and accessibility </span><span class="s1">of</span><span class="s2"> spatial information.</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
+<p class="p6"><span class="s7"><span class="Apple-converted-space">  </span>&lt;/</span><span class="s2">Section</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2">);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// Skills Section</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">Skills</span><span class="s2"> = () =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> { db, userId, isAuthReady } = useFirebase();</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [skills, setSkills] = useState([]);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [loading, setLoading] = useState(</span><span class="s1">true</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [error, setError] = useState(</span><span class="s1">null</span><span class="s2">);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>useEffect(() =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">if</span><span class="s2"> (!isAuthReady || !db || !userId) {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>console.log(</span><span class="s2">"Firebase not ready for skills fetch."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">return</span><span class="s2">;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> collectionPath = </span><span class="s4">`artifacts/</span><span class="s2">${__app_id}</span><span class="s4">/public/data/skills`</span><span class="s2">;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> q = query(collection(db, collectionPath));</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> unsubscribe = onSnapshot(q, (snapshot) =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">try</span><span class="s2"> {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">const</span><span class="s2"> skillsData = snapshot.docs.map(doc =&gt; ({ id: doc.id, ...doc.data() }));</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>setSkills(skillsData);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>setLoading(</span><span class="s1">false</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>} </span><span class="s1">catch</span><span class="s2"> (err) {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>console.error(</span><span class="s4">"Error fetching skills:"</span><span class="s2">, err);</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>setError(</span><span class="s2">"Failed to load skills."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>setLoading(</span><span class="s1">false</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}, (err) =&gt; {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>console.error(</span><span class="s2">"Snapshot listener error for skills:"</span><span class="s7">, err);</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>setError(</span><span class="s2">"Failed to subscribe to skills updates."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setLoading(</span><span class="s1">false</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>});</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s2">// Initial data seeding if collection is empty (for demonstration)</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> seedSkills = </span><span class="s1">async</span><span class="s2"> () =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">const</span><span class="s2"> skillsRef = collection(db, collectionPath);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">const</span><span class="s2"> snapshot = </span><span class="s1">await</span><span class="s2"> getDocs(skillsRef); </span><span class="s5">// getDocs is now imported</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">if</span><span class="s2"> (snapshot.empty) {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>console.log(</span><span class="s2">"Seeding initial skills data..."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"ArcGIS Pro"</span><span class="s2">, category: </span><span class="s4">"Software"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"QGIS"</span><span class="s2">, category: </span><span class="s4">"Software"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"Python (Geopandas, GDAL)"</span><span class="s2">, category: </span><span class="s4">"Programming"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"JavaScript (Leaflet, OpenLayers)"</span><span class="s2">, category: </span><span class="s4">"Programming"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"PostgreSQL/PostGIS"</span><span class="s2">, category: </span><span class="s4">"Databases"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"Remote Sensing"</span><span class="s2">, category: </span><span class="s4">"Analysis"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"Spatial Analysis"</span><span class="s2">, category: </span><span class="s4">"Analysis"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"Web Mapping"</span><span class="s2">, category: </span><span class="s4">"Development"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"Data Visualization"</span><span class="s2">, category: </span><span class="s4">"Analysis"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(skillsRef, { name: </span><span class="s4">"Drone Mapping"</span><span class="s2">, category: </span><span class="s4">"Data Acquisition"</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>};</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>seedSkills();</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">return</span><span class="s2"> () =&gt; unsubscribe();</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>}, [db, userId, isAuthReady]);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">if</span><span class="s2"> (loading) </span><span class="s1">return</span><span class="s2"> &lt;p className=</span><span class="s4">"text-center text-gray-600"</span><span class="s2">&gt;</span><span class="s3">Loading</span><span class="s2"> skills...&lt;/p&gt;;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">if</span><span class="s2"> (error) </span><span class="s1">return</span><span class="s2"> &lt;p className=</span><span class="s4">"text-center text-red-500"</span><span class="s2">&gt;{error}&lt;/p&gt;;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">if</span><span class="s2"> (skills.length === </span><span class="s8">0</span><span class="s2">) </span><span class="s1">return</span><span class="s2"> &lt;p className=</span><span class="s4">"text-center text-gray-600"</span><span class="s2">&gt;</span><span class="s3">No</span><span class="s2"> skills added yet. </span><span class="s3">Add</span><span class="s2"> some </span><span class="s1">from</span><span class="s2"> the database!&lt;/p&gt;;</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> categories = [...</span><span class="s1">new</span><span class="s2"> </span><span class="s3">Set</span><span class="s2">(skills.map(skill =&gt; skill.category))];</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;</span><span class="s3">Section</span><span class="s7"> id=</span><span class="s2">"skills"</span><span class="s7"> title=</span><span class="s2">"My Skills"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-5xl mx-auto"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>{categories.map(category =&gt; (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>&lt;div key={category} className=</span><span class="s2">"bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out border border-blue-100"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;h3 className=</span><span class="s2">"text-2xl font-semibold text-blue-700 mb-4 border-b-2 border-teal-300 pb-2"</span><span class="s7">&gt;{category}&lt;/h3&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;ul className=</span><span class="s2">"list-disc pl-5 text-gray-700"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>{skills.filter(skill =&gt; skill.category === category).map(skill =&gt; (</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>&lt;li key={skill.id} className=</span><span class="s4">"mb-2 text-lg"</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span>{skill.name}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>&lt;/li&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>))}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/ul&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>))}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;p className=</span><span class="s2">"mt-8 text-gray-600 text-sm text-center"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s3">Your</span><span class="s2"> </span><span class="s3">User</span><span class="s2"> </span><span class="s3">ID</span><span class="s2">: &lt;span className=</span><span class="s4">"font-mono text-blue-700 break-all"</span><span class="s2">&gt;{userId}&lt;/span&gt; (</span><span class="s3">This</span><span class="s2"> </span><span class="s3">ID</span><span class="s2"> </span><span class="s1">is</span><span class="s2"> used </span><span class="s1">for</span><span class="s2"> data storage </span><span class="s1">in</span><span class="s2"> </span><span class="s3">Firestore</span><span class="s2">)</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/</span><span class="s3">Section</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
+<p class="p1"><span class="s2">};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// Projects Section</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">Projects</span><span class="s2"> = () =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> { db, userId, isAuthReady } = useFirebase();</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [projects, setProjects] = useState([]);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [loading, setLoading] = useState(</span><span class="s1">true</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [error, setError] = useState(</span><span class="s1">null</span><span class="s2">);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>useEffect(() =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">if</span><span class="s2"> (!isAuthReady || !db || !userId) {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>console.log(</span><span class="s2">"Firebase not ready for projects fetch."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">return</span><span class="s2">;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> collectionPath = </span><span class="s4">`artifacts/</span><span class="s2">${__app_id}</span><span class="s4">/public/data/projects`</span><span class="s2">;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> q = query(collection(db, collectionPath));</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> unsubscribe = onSnapshot(q, (snapshot) =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">try</span><span class="s2"> {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">const</span><span class="s2"> projectsData = snapshot.docs.map(doc =&gt; ({ id: doc.id, ...doc.data() }));</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>setProjects(projectsData);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>setLoading(</span><span class="s1">false</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>} </span><span class="s1">catch</span><span class="s2"> (err) {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>console.error(</span><span class="s4">"Error fetching projects:"</span><span class="s2">, err);</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>setError(</span><span class="s2">"Failed to load projects."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>setLoading(</span><span class="s1">false</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}, (err) =&gt; {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>console.error(</span><span class="s2">"Snapshot listener error for projects:"</span><span class="s7">, err);</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>setError(</span><span class="s2">"Failed to subscribe to projects updates."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setLoading(</span><span class="s1">false</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>});</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">    </span></span><span class="s2">// Initial data seeding if collection is empty (for demonstration)</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">const</span><span class="s2"> seedProjects = </span><span class="s1">async</span><span class="s2"> () =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">const</span><span class="s2"> projectsRef = collection(db, collectionPath);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">const</span><span class="s2"> snapshot = </span><span class="s1">await</span><span class="s2"> getDocs(projectsRef); </span><span class="s5">// getDocs is now imported</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">if</span><span class="s2"> (snapshot.empty) {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>console.log(</span><span class="s2">"Seeding initial projects data..."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(projectsRef, {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>title: </span><span class="s2">"Urban Green Space Analysis"</span><span class="s7">,</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>description: </span><span class="s2">"Analyzed urban green space distribution and accessibility using satellite imagery and demographic data."</span><span class="s7">,</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>imageUrl: </span><span class="s2">"https://placehold.co/600x400/C8E6C9/000000?text=Urban+Green"</span><span class="s7">,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>link: </span><span class="s4">"#"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>});</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(projectsRef, {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>title: </span><span class="s2">"Web-Based Flood Risk Viewer"</span><span class="s7">,</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>description: </span><span class="s2">"Developed an interactive web map application to visualize flood risk zones and vulnerable populations."</span><span class="s7">,</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>imageUrl: </span><span class="s2">"https://placehold.co/600x400/B3E5FC/000000?text=Flood+Risk"</span><span class="s7">,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>link: </span><span class="s4">"#"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>});</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span></span><span class="s1">await</span><span class="s2"> addDoc(projectsRef, {</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>title: </span><span class="s2">"Automated Land Cover Classification"</span><span class="s7">,</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>description: </span><span class="s2">"Implemented a Python script using machine learning to automate land cover classification from aerial photos."</span><span class="s7">,</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>imageUrl: </span><span class="s2">"https://placehold.co/600x400/FFECB3/000000?text=Land+Cover"</span><span class="s7">,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>link: </span><span class="s4">"#"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>});</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>};</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>seedProjects();</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">return</span><span class="s2"> () =&gt; unsubscribe();</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>}, [db, userId, isAuthReady]);</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">if</span><span class="s2"> (loading) </span><span class="s1">return</span><span class="s2"> &lt;p className=</span><span class="s4">"text-center text-gray-600"</span><span class="s2">&gt;</span><span class="s3">Loading</span><span class="s2"> projects...&lt;/p&gt;;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">if</span><span class="s2"> (error) </span><span class="s1">return</span><span class="s2"> &lt;p className=</span><span class="s4">"text-center text-red-500"</span><span class="s2">&gt;{error}&lt;/p&gt;;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">if</span><span class="s2"> (projects.length === </span><span class="s8">0</span><span class="s2">) </span><span class="s1">return</span><span class="s2"> &lt;p className=</span><span class="s4">"text-center text-gray-600"</span><span class="s2">&gt;</span><span class="s3">No</span><span class="s2"> projects added yet. </span><span class="s3">Add</span><span class="s2"> some </span><span class="s1">from</span><span class="s2"> the database!&lt;/p&gt;;</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;</span><span class="s3">Section</span><span class="s7"> id=</span><span class="s2">"projects"</span><span class="s7"> title=</span><span class="s2">"My Projects"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full max-w-6xl mx-auto"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>{projects.map(project =&gt; (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">          </span>&lt;div key={project.id} className=</span><span class="s2">"bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out border border-blue-100"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;img</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>src={project.imageUrl}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>alt={project.title}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>className=</span><span class="s2">"w-full h-48 object-cover"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>onError={(e) =&gt; { e.target.onerror = </span><span class="s1">null</span><span class="s2">; e.target.src = </span><span class="s4">`https://placehold.co/600x400/CCCCCC/000000?text=Image+Missing`</span><span class="s2">; }}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>/&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;div className=</span><span class="s4">"p-6"</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;h3 className=</span><span class="s4">"text-xl font-semibold text-blue-700 mb-3"</span><span class="s2">&gt;{project.title}&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>&lt;p className=</span><span class="s4">"text-gray-600 text-base mb-4"</span><span class="s2">&gt;{project.description}&lt;/p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>{project.link &amp;&amp; (</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>&lt;a</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span>href={project.link}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span>target=</span><span class="s4">"_blank"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span>rel=</span><span class="s4">"noopener noreferrer"</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">                  </span>className=</span><span class="s2">"inline-flex items-center text-teal-600 hover:text-teal-800 font-medium transition duration-300 ease-in-out"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span></span><span class="s3">View</span><span class="s2"> </span><span class="s3">Project</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">                  </span>&lt;svg className=</span><span class="s2">"ml-2 w-4 h-4"</span><span class="s7"> fill=</span><span class="s2">"none"</span><span class="s7"> stroke=</span><span class="s2">"currentColor"</span><span class="s7"> viewBox=</span><span class="s2">"0 0 24 24"</span><span class="s7"> xmlns=</span><span class="s2">"http://www.w3.org/2000/svg"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                    </span>&lt;path strokeLinecap=</span><span class="s4">"round"</span><span class="s2"> strokeLinejoin=</span><span class="s4">"round"</span><span class="s2"> strokeWidth=</span><span class="s4">"2"</span><span class="s2"> d=</span><span class="s4">"M17 8l4 4m0 0l-4 4m4-4H3"</span><span class="s2">&gt;&lt;/path&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                  </span>&lt;/svg&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">                </span>&lt;/a&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>)}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>))}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/</span><span class="s3">Section</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
+<p class="p1"><span class="s2">};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// Contact Section</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">Contact</span><span class="s2"> = () =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> { db, userId, isAuthReady } = useFirebase();</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [formData, setFormData] = useState({ name: </span><span class="s4">''</span><span class="s2">, email: </span><span class="s4">''</span><span class="s2">, message: </span><span class="s4">''</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> [status, setStatus] = useState(</span><span class="s4">''</span><span class="s2">); </span><span class="s5">// 'sending', 'sent', 'error'</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> handleChange = (e) =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setFormData({ ...formData, [e.target.name]: e.target.value });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> handleSubmit = </span><span class="s1">async</span><span class="s2"> (e) =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>e.preventDefault();</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">if</span><span class="s2"> (!isAuthReady || !db || !userId) {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setStatus(</span><span class="s4">'error'</span><span class="s2">);</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>console.error(</span><span class="s2">"Firebase not ready for contact form submission."</span><span class="s7">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">return</span><span class="s2">;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>setStatus(</span><span class="s4">'sending'</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span></span><span class="s1">try</span><span class="s2"> {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">const</span><span class="s2"> collectionPath = </span><span class="s4">`artifacts/</span><span class="s2">${__app_id}</span><span class="s4">/public/data/messages`</span><span class="s2">;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span></span><span class="s1">await</span><span class="s2"> addDoc(collection(db, collectionPath), {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>...formData,</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>timestamp: </span><span class="s1">new</span><span class="s2"> </span><span class="s3">Date</span><span class="s2">(),</span></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">        </span>userId: userId </span><span class="s2">// Store the user ID who sent the message</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>});</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setStatus(</span><span class="s4">'sent'</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setFormData({ name: </span><span class="s4">''</span><span class="s2">, email: </span><span class="s4">''</span><span class="s2">, message: </span><span class="s4">''</span><span class="s2"> }); </span><span class="s5">// Clear form</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; setStatus(</span><span class="s4">''</span><span class="s2">), </span><span class="s8">3000</span><span class="s2">); </span><span class="s5">// Clear status after 3 seconds</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>} </span><span class="s1">catch</span><span class="s2"> (error) {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>console.error(</span><span class="s4">"Error sending message:"</span><span class="s2">, error);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>setStatus(</span><span class="s4">'error'</span><span class="s2">);</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;</span><span class="s3">Section</span><span class="s7"> id=</span><span class="s2">"contact"</span><span class="s7"> title=</span><span class="s2">"Get in Touch"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"w-full max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md border border-blue-100"</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">        </span>&lt;p className=</span><span class="s2">"text-center text-gray-700 mb-6 text-lg"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span></span><span class="s3">Have</span><span class="s2"> a project </span><span class="s1">in</span><span class="s2"> mind or just want to say hello? </span><span class="s3">Fill</span><span class="s2"> </span><span class="s1">out</span><span class="s2"> the form below!</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;form onSubmit={handleSubmit} className=</span><span class="s4">"space-y-6"</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;div&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;label htmlFor=</span><span class="s2">"name"</span><span class="s7"> className=</span><span class="s2">"block text-gray-800 text-sm font-medium mb-2"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">Name</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/label&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;input</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s1">type</span><span class="s2">=</span><span class="s4">"text"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>id=</span><span class="s4">"name"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>name=</span><span class="s4">"name"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>value={formData.name}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>onChange={handleChange}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>className=</span><span class="s2">"w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>required</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>/&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;div&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;label htmlFor=</span><span class="s2">"email"</span><span class="s7"> className=</span><span class="s2">"block text-gray-800 text-sm font-medium mb-2"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">Email</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/label&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;input</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s1">type</span><span class="s2">=</span><span class="s4">"email"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>id=</span><span class="s4">"email"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>name=</span><span class="s4">"email"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>value={formData.email}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>onChange={handleChange}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>className=</span><span class="s2">"w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>required</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>/&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;div&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>&lt;label htmlFor=</span><span class="s2">"message"</span><span class="s7"> className=</span><span class="s2">"block text-gray-800 text-sm font-medium mb-2"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span></span><span class="s3">Message</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;/label&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;textarea</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>id=</span><span class="s4">"message"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>name=</span><span class="s4">"message"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>rows=</span><span class="s4">"5"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>value={formData.message}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>onChange={handleChange}</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">              </span>className=</span><span class="s2">"w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">              </span>required</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&gt;&lt;/textarea&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;button</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span></span><span class="s1">type</span><span class="s2">=</span><span class="s4">"submit"</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>className=</span><span class="s2">"w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md shadow-lg transform hover:scale-105 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>disabled={status === </span><span class="s4">'sending'</span><span class="s2">}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">            </span>{status === </span><span class="s2">'sending'</span><span class="s7"> ? </span><span class="s2">'Sending...'</span><span class="s7"> : </span><span class="s2">'Send Message'</span><span class="s7">}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>{status === </span><span class="s4">'sent'</span><span class="s2"> &amp;&amp; (</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;p className=</span><span class="s4">"text-center text-green-600 mt-4"</span><span class="s2">&gt;</span><span class="s3">Message</span><span class="s2"> sent successfully!&lt;/p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>)}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>{status === </span><span class="s4">'error'</span><span class="s2"> &amp;&amp; (</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">            </span>&lt;p className=</span><span class="s4">"text-center text-red-500 mt-4"</span><span class="s2">&gt;</span><span class="s3">Failed</span><span class="s2"> to send message. </span><span class="s3">Please</span><span class="s2"> </span><span class="s1">try</span><span class="s2"> again.&lt;/p&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>)}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/form&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/</span><span class="s3">Section</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
+<p class="p1"><span class="s2">};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// Footer Component</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">Footer</span><span class="s2"> = () =&gt; {</span></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">// Removed userId from useFirebase as it's no longer displayed</span></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">    </span>&lt;footer className=</span><span class="s2">"bg-gray-800 text-white py-8 px-4 md:px-8 lg:px-16 text-center rounded-t-xl"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s4">"container mx-auto"</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;p className=</span><span class="s4">"mb-4 text-lg"</span><span class="s2">&gt;&amp;copy; {</span><span class="s1">new</span><span class="s2"> </span><span class="s3">Date</span><span class="s2">().getFullYear()} </span><span class="s3">Geoinsight</span><span class="s2"> </span><span class="s3">Surveying</span><span class="s2">. </span><span class="s3">All</span><span class="s2"> rights reserved.&lt;/p&gt;</span></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">        </span>{</span><span class="s2">/* Removed the "Built with React and Firebase." line */</span><span class="s7">}</span></p>
+<p class="p3"><span class="s7"><span class="Apple-converted-space">        </span>{</span><span class="s2">/* Removed the "Your current session ID" line */</span><span class="s7">}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
+<p class="p1"><span class="s2">};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p3"><span class="s2">// Main App Component</span></p>
+<p class="p1"><span class="s1">const</span><span class="s2"> </span><span class="s3">App</span><span class="s2"> = () =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> sectionRefs = {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>home: </span><span class="s3">React</span><span class="s2">.useRef(</span><span class="s1">null</span><span class="s2">),</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>about: </span><span class="s3">React</span><span class="s2">.useRef(</span><span class="s1">null</span><span class="s2">),</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>skills: </span><span class="s3">React</span><span class="s2">.useRef(</span><span class="s1">null</span><span class="s2">),</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>projects: </span><span class="s3">React</span><span class="s2">.useRef(</span><span class="s1">null</span><span class="s2">),</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>contact: </span><span class="s3">React</span><span class="s2">.useRef(</span><span class="s1">null</span><span class="s2">),</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span></span><span class="s1">const</span><span class="s2"> scrollToSection = (sectionId) =&gt; {</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">    </span>sectionRefs[sectionId].current?.scrollIntoView({ behavior: </span><span class="s4">'smooth'</span><span class="s2"> });</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p5"><span class="s7"><span class="Apple-converted-space">  </span></span><span class="s2">return</span><span class="s7"> (</span></p>
+<p class="p6"><span class="s7"><span class="Apple-converted-space">    </span>&lt;</span><span class="s2">FirebaseProvider</span><span class="s7">&gt;</span></p>
+<p class="p4"><span class="s7"><span class="Apple-converted-space">      </span>&lt;div className=</span><span class="s2">"min-h-screen flex flex-col font-inter bg-gray-100"</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;style&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>{</span><span class="s4">`</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">            </span>@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap');</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">            </span>body {</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">              </span>font-family: 'Inter', sans-serif;</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">              </span>margin: 0;</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">              </span>padding: 0;</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">              </span>box-sizing: border-box;</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">            </span>html {</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">              </span>scroll-behavior: smooth;</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p4"><span class="s2"><span class="Apple-converted-space">          </span>`</span><span class="s7">}</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/style&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;</span><span class="s3">Navbar</span><span class="s2"> scrollToSection={scrollToSection} /&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;main className=</span><span class="s4">"flex-grow"</span><span class="s2">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;div ref={sectionRefs.home}&gt;&lt;</span><span class="s3">Home</span><span class="s2"> /&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;div ref={sectionRefs.about}&gt;&lt;</span><span class="s3">About</span><span class="s2"> /&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;div ref={sectionRefs.skills}&gt;&lt;</span><span class="s3">Skills</span><span class="s2"> /&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;div ref={sectionRefs.projects}&gt;&lt;</span><span class="s3">Projects</span><span class="s2"> /&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">          </span>&lt;div ref={sectionRefs.contact}&gt;&lt;</span><span class="s3">Contact</span><span class="s2"> /&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;/main&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">        </span>&lt;</span><span class="s3">Footer</span><span class="s2"> /&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
+<p class="p6"><span class="s7"><span class="Apple-converted-space">    </span>&lt;/</span><span class="s2">FirebaseProvider</span><span class="s7">&gt;</span></p>
+<p class="p1"><span class="s2"><span class="Apple-converted-space">  </span>);</span></p>
+<p class="p1"><span class="s2">};</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+<p class="p5"><span class="s2">export</span><span class="s7"> </span><span class="s2">default</span><span class="s7"> </span><span class="s3">App</span><span class="s7">;</span></p>
+<p class="p2"><span class="s6"></span><br></p>
+</body>
+</html>
