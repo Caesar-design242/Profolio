@@ -396,6 +396,7 @@
                     console.log("Seeding initial skills data...");
                     await addDoc(skillsRef, { name: "ArcGIS Pro", category: "Software" });
                     await addDoc(skillsRef, { name: "QGIS", category: "Software" });
+                    await addDoc(skillsRef, { name: "Google Earth Engine", category: "Programming" });
                     await addDoc(skillsRef, { name: "Python (Geopandas, GDAL)", category: "Programming" });
                     await addDoc(skillsRef, { name: "JavaScript (Leaflet, OpenLayers)", category: "Programming" });
                     await addDoc(skillsRef, { name: "PostgreSQL/PostGIS", category: "Databases" });
@@ -404,6 +405,8 @@
                     await addDoc(skillsRef, { name: "Web Mapping", category: "Development" });
                     await addDoc(skillsRef, { name: "Data Visualization", category: "Analysis" });
                     await addDoc(skillsRef, { name: "Drone Mapping", category: "Data Acquisition" });
+                    await addDoc(skillsRef, { name: "GNSS Equipment", category: "Data Acquisition" });
+                    await addDoc(skillsRef, { name: "Total Station Equipment", category: "Data Acquisition" });
                     console.log("Initial skills data seeded."); // Debugging: Confirm seeding
                 }
             } catch (seedError) {
