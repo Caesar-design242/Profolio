@@ -240,8 +240,20 @@
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js"; // Import getAnalytics
 
         // Firebase Configuration and Initialization
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        // NOTE: For Canvas environment, __app_id, __firebase_config, and __initial_auth_token are usually provided automatically.
+        // We are temporarily hardcoding firebaseConfig here to bypass potential environment setup issues.
+        // In a real production app, you would typically load this securely, not hardcode it.
+        const appId = "profolio-354a7"; // Hardcoding your projectId as appId for consistency with collection paths
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9qoP_UWGu-Vn3o5z921EGOsVY7bUmQ2A",
+            authDomain: "profolio-354a7.firebaseapp.com",
+            projectId: "profolio-354a7",
+            storageBucket: "profolio-354a7.firebasestorage.app",
+            messagingSenderId: "429219236720",
+            appId: "1:429219236720:web:b20a4690c012234d05ddb5",
+            measurementId: "G-YD95BN76W3"
+        };
+
 
         let app;
         let db;
@@ -250,92 +262,75 @@
         let userId;
         let isAuthReady = false;
 
-        // Initialize Firebase only if config is available
-        if (Object.keys(firebaseConfig).length === 0) {
-            console.error("Firebase config is missing. Dynamic content (skills, projects, contact form) will not function.");
-            // Display a message on the page if Firebase config is missing
+        try { // Debugging: Wrap Firebase initialization in try-catch
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            analytics = getAnalytics(app); // Initialize analytics
+            console.log("Firebase app, db, auth, analytics initialized with hardcoded config."); // Debugging: Confirm initialization
+
+            // Authenticate user
+            const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+            const signInUser = async () => {
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                        console.log("Signed in with custom token."); // Debugging: Confirm custom token sign-in
+                    } else {
+                        await signInAnonymously(auth);
+                        console.log("Signed in anonymously."); // Debugging: Confirm anonymous sign-in
+                    }
+                } catch (error) {
+                    console.error("Firebase authentication error:", error);
+                    // Critical error: if auth fails, mark Firebase as not ready for dynamic content
+                    isAuthReady = false;
+                    // Update UI to reflect failure to load dynamic content
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const skillsContainer = document.getElementById('skills-container');
+                        const projectsContainer = document.getElementById('projects-container');
+                        const contactFormStatus = document.getElementById('form-status');
+                        if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Authentication failed. Cannot load skills.</p>';
+                        if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Authentication failed. Cannot load projects.</p>';
+                        if (contactFormStatus) contactFormStatus.innerHTML = '<p class="text-red-500">Authentication failed. Contact form disabled.</p>';
+                        const submitButton = document.getElementById('submit-button');
+                        if (submitButton) submitButton.disabled = true;
+                    });
+                }
+            };
+
+            // Listen for auth state changes
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    userId = user.uid;
+                    console.log("Auth state changed: User logged in. User ID:", userId); // Debugging: User ID
+                } else {
+                    userId = crypto.randomUUID(); // Fallback for truly anonymous or if sign-in fails
+                    console.log("Auth state changed: No user, generated anonymous ID:", userId); // Debugging: Anonymous ID
+                }
+                isAuthReady = true;
+                console.log("Firebase Auth Ready. User ID:", userId);
+                // After auth is ready, load dynamic content
+                loadSkills();
+                loadProjects();
+            });
+
+            signInUser(); // Initiate sign-in
+        } catch (initError) {
+            console.error("Firebase initialization failed:", initError);
+            // If initialization itself fails, display a message
             document.addEventListener('DOMContentLoaded', () => {
-                console.log("DOMContentLoaded fired - Firebase config missing branch."); // Debugging: Check DOMContentLoaded in this branch
                 const skillsContainer = document.getElementById('skills-container');
                 const projectsContainer = document.getElementById('projects-container');
                 const contactFormStatus = document.getElementById('form-status');
-
-                if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase not configured. Skills cannot be loaded.</p>';
-                if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase not configured. Projects cannot be loaded.</p>';
-                if (contactFormStatus) contactFormStatus.innerHTML = '<p class="text-red-500">Firebase not configured. Contact form disabled.</p>';
+                if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase initialization failed. Skills cannot be loaded.</p>';
+                if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase initialization failed. Projects cannot be loaded.</p>';
+                if (contactFormStatus) contactFormStatus.innerHTML = '<p class="text-red-500">Firebase initialization failed. Contact form disabled.</p>';
                 const submitButton = document.getElementById('submit-button');
                 if (submitButton) submitButton.disabled = true;
             });
-        } else {
-            try { // Debugging: Wrap Firebase initialization in try-catch
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-                analytics = getAnalytics(app); // Initialize analytics
-                console.log("Firebase app, db, auth, analytics initialized."); // Debugging: Confirm initialization
-
-                // Authenticate user
-                const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-                const signInUser = async () => {
-                    try {
-                        if (initialAuthToken) {
-                            await signInWithCustomToken(auth, initialAuthToken);
-                            console.log("Signed in with custom token."); // Debugging: Confirm custom token sign-in
-                        } else {
-                            await signInAnonymously(auth);
-                            console.log("Signed in anonymously."); // Debugging: Confirm anonymous sign-in
-                        }
-                    } catch (error) {
-                        console.error("Firebase authentication error:", error);
-                        // Critical error: if auth fails, mark Firebase as not ready for dynamic content
-                        isAuthReady = false;
-                        // Update UI to reflect failure to load dynamic content
-                        document.addEventListener('DOMContentLoaded', () => {
-                            const skillsContainer = document.getElementById('skills-container');
-                            const projectsContainer = document.getElementById('projects-container');
-                            const contactFormStatus = document.getElementById('form-status');
-                            if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Authentication failed. Cannot load skills.</p>';
-                            if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Authentication failed. Cannot load projects.</p>';
-                            if (contactFormStatus) contactFormStatus.innerHTML = '<p class="text-red-500">Authentication failed. Contact form disabled.</p>';
-                            const submitButton = document.getElementById('submit-button');
-                            if (submitButton) submitButton.disabled = true;
-                        });
-                    }
-                };
-
-                // Listen for auth state changes
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Auth state changed: User logged in. User ID:", userId); // Debugging: User ID
-                    } else {
-                        userId = crypto.randomUUID(); // Fallback for truly anonymous or if sign-in fails
-                        console.log("Auth state changed: No user, generated anonymous ID:", userId); // Debugging: Anonymous ID
-                    }
-                    isAuthReady = true;
-                    console.log("Firebase Auth Ready. User ID:", userId);
-                    // After auth is ready, load dynamic content
-                    loadSkills();
-                    loadProjects();
-                });
-
-                signInUser(); // Initiate sign-in
-            } catch (initError) {
-                console.error("Firebase initialization failed:", initError);
-                // If initialization itself fails, display a message
-                document.addEventListener('DOMContentLoaded', () => {
-                    const skillsContainer = document.getElementById('skills-container');
-                    const projectsContainer = document.getElementById('projects-container');
-                    const contactFormStatus = document.getElementById('form-status');
-                    if (skillsContainer) skillsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase initialization failed. Skills cannot be loaded.</p>';
-                    if (projectsContainer) projectsContainer.innerHTML = '<p class="text-center text-red-500 col-span-full">Firebase initialization failed. Projects cannot be loaded.</p>';
-                    if (contactFormStatus) contactFormStatus.innerHTML = '<p class="text-red-500">Firebase initialization failed. Contact form disabled.</p>';
-                    const submitButton = document.getElementById('submit-button');
-                    if (submitButton) submitButton.disabled = true;
-                });
-            }
         }
+
 
         // --- Navigation Toggle ---
         document.addEventListener('DOMContentLoaded', () => {
