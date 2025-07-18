@@ -193,8 +193,7 @@
 <p class="p4"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"text-center text-gray-600 col-span-full"</span><span class="s3">&gt;</span><span class="s4">Loading projects...</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
 <p class="p4"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"mt-12 text-center text-gray-700"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-lg mb-4"</span><span class="s3">&gt;</span><span class="s1">I often use </span><span class="s3">&lt;</span><span class="s6">a</span><span class="s1"> </span><span class="s2">href</span><span class="s3">=</span><span class="s5">"https://gist.github.com/"</span><span class="s1"> </span><span class="s2">target</span><span class="s3">=</span><span class="s5">"_blank"</span><span class="s1"> </span><span class="s2">rel</span><span class="s3">=</span><span class="s5">"noopener noreferrer"</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-blue-600 hover:underline"</span><span class="s3">&gt;</span><span class="s1">GitHub Gists</span><span class="s3">&lt;/</span><span class="s6">a</span><span class="s3">&gt;</span><span class="s1"> to share code snippets and project details. You can embed Gists directly into project descriptions for live code examples!</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">p</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"text-sm"</span><span class="s3">&gt;</span><span class="s1">Example of a Gist embed (replace with your own Gist ID):</span><span class="s3">&lt;/</span><span class="s6">p</span><span class="s3">&gt;</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s1">&lt;!-- GitHub Gist embed script --&gt;</span></p>
 <p class="p4"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s3">&lt;</span><span class="s6">script</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://gist.github.com/octocat/6a40e1180d75a133d596.js"</span><span class="s3">&gt;&lt;/</span><span class="s6">script</span><span class="s3">&gt;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
@@ -268,9 +267,11 @@
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p6"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s1">&lt;!-- Firebase SDKs --&gt;</span></p>
 <p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">script</span><span class="s4"> </span><span class="s2">type</span><span class="s3">=</span><span class="s1">"module"</span><span class="s3">&gt;</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span>console.log(</span><span class="s7">"Script block started."</span><span class="s4">); </span><span class="s1">// Debugging: Check if script starts execution</span></p>
 <p class="p8"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s12">import</span><span class="s4"> { initializeApp } </span><span class="s12">from</span><span class="s4"> </span><span class="s1">"https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js"</span><span class="s4">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">import</span><span class="s1"> { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } </span><span class="s12">from</span><span class="s1"> </span><span class="s7">"https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js"</span><span class="s1">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">import</span><span class="s1"> { getFirestore, collection, addDoc, onSnapshot, query, getDocs } </span><span class="s12">from</span><span class="s1"> </span><span class="s7">"https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"</span><span class="s1">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s12">import</span><span class="s4"> { getAnalytics } </span><span class="s12">from</span><span class="s4"> </span><span class="s1">"https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js"</span><span class="s4">; </span><span class="s10">// Import getAnalytics</span></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// Firebase Configuration and Initialization</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">const</span><span class="s1"> appId = </span><span class="s12">typeof</span><span class="s1"> __app_id !== </span><span class="s7">'undefined'</span><span class="s1"> ? __app_id : </span><span class="s7">'default-app-id'</span><span class="s1">;</span></p>
@@ -279,105 +280,171 @@
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">let</span><span class="s1"> app;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">let</span><span class="s1"> db;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">let</span><span class="s1"> auth;</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s12">let</span><span class="s4"> analytics; </span><span class="s1">// Declare analytics variable</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">let</span><span class="s1"> userId;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">let</span><span class="s1"> isAuthReady = </span><span class="s12">false</span><span class="s1">;</span></p>
 <p class="p7"><span class="s11"></span><br></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// Initialize Firebase only if config is available</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">if</span><span class="s1"> (</span><span class="s13">Object</span><span class="s1">.keys(firebaseConfig).length === </span><span class="s14">0</span><span class="s1">) {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span>console.error(</span><span class="s1">"Firebase config is missing. Please ensure __firebase_config is provided."</span><span class="s4">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>} </span><span class="s12">else</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>app = initializeApp(firebaseConfig);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>db = getFirestore(app);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>auth = getAuth(app);</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span>console.error(</span><span class="s1">"Firebase config is missing. Dynamic content (skills, projects, contact form) will not function."</span><span class="s4">);</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">// Display a message on the page if Firebase config is missing</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>document.addEventListener(</span><span class="s7">'DOMContentLoaded'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>console.log(</span><span class="s1">"DOMContentLoaded fired - Firebase config missing branch."</span><span class="s4">); </span><span class="s10">// Debugging: Check DOMContentLoaded in this branch</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> skillsContainer = document.getElementById(</span><span class="s7">'skills-container'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> projectsContainer = document.getElementById(</span><span class="s7">'projects-container'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> contactFormStatus = document.getElementById(</span><span class="s7">'form-status'</span><span class="s1">);</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">// Authenticate user</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> initialAuthToken = </span><span class="s12">typeof</span><span class="s1"> __initial_auth_token !== </span><span class="s7">'undefined'</span><span class="s1"> ? __initial_auth_token : </span><span class="s12">null</span><span class="s1">;</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> signInUser = </span><span class="s12">async</span><span class="s1"> () =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">try</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (initialAuthToken) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">await</span><span class="s1"> signInWithCustomToken(auth, initialAuthToken);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>} </span><span class="s12">else</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">await</span><span class="s1"> signInAnonymously(auth);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} </span><span class="s12">catch</span><span class="s1"> (error) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.error(</span><span class="s7">"Firebase authentication error:"</span><span class="s1">, error);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
-<p class="p7"><span class="s11"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">// Listen for auth state changes</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>onAuthStateChanged(auth, (user) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s1"> (user) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>userId = user.uid;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} </span><span class="s12">else</span><span class="s1"> {</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span>userId = crypto.randomUUID(); </span><span class="s1">// Fallback for truly anonymous or if sign-in fails</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>isAuthReady = </span><span class="s12">true</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>console.log(</span><span class="s7">"Firebase Auth Ready. User ID:"</span><span class="s1">, userId);</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// After auth is ready, load dynamic content</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>loadSkills();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>loadProjects();</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s4"> (skillsContainer) skillsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Firebase not configured. Skills cannot be loaded.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s4"> (projectsContainer) projectsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Firebase not configured. Projects cannot be loaded.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s4"> (contactFormStatus) contactFormStatus.innerHTML = </span><span class="s1">'&lt;p class="text-red-500"&gt;Firebase not configured. Contact form disabled.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> submitButton = document.getElementById(</span><span class="s7">'submit-button'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s1"> (submitButton) submitButton.disabled = </span><span class="s12">true</span><span class="s1">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>} </span><span class="s12">else</span><span class="s1"> {</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s12">try</span><span class="s4"> { </span><span class="s1">// Debugging: Wrap Firebase initialization in try-catch</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>app = initializeApp(firebaseConfig);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>db = getFirestore(app);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>auth = getAuth(app);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>analytics = getAnalytics(app); </span><span class="s10">// Initialize analytics</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>console.log(</span><span class="s1">"Firebase app, db, auth, analytics initialized."</span><span class="s4">); </span><span class="s10">// Debugging: Confirm initialization</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>signInUser(); </span><span class="s10">// Initiate sign-in</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Authenticate user</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> initialAuthToken = </span><span class="s12">typeof</span><span class="s1"> __initial_auth_token !== </span><span class="s7">'undefined'</span><span class="s1"> ? __initial_auth_token : </span><span class="s12">null</span><span class="s1">;</span></p>
+<p class="p7"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> signInUser = </span><span class="s12">async</span><span class="s1"> () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">try</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">if</span><span class="s1"> (initialAuthToken) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s12">await</span><span class="s1"> signInWithCustomToken(auth, initialAuthToken);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>console.log(</span><span class="s7">"Signed in with custom token."</span><span class="s1">); </span><span class="s10">// Debugging: Confirm custom token sign-in</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>} </span><span class="s12">else</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s12">await</span><span class="s1"> signInAnonymously(auth);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>console.log(</span><span class="s7">"Signed in anonymously."</span><span class="s1">); </span><span class="s10">// Debugging: Confirm anonymous sign-in</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>} </span><span class="s12">catch</span><span class="s1"> (error) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>console.error(</span><span class="s7">"Firebase authentication error:"</span><span class="s1">, error);</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s1">// Critical error: if auth fails, mark Firebase as not ready for dynamic content</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>isAuthReady = </span><span class="s12">false</span><span class="s1">;</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s1">// Update UI to reflect failure to load dynamic content</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>document.addEventListener(</span><span class="s7">'DOMContentLoaded'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s12">const</span><span class="s1"> skillsContainer = document.getElementById(</span><span class="s7">'skills-container'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s12">const</span><span class="s1"> projectsContainer = document.getElementById(</span><span class="s7">'projects-container'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s12">const</span><span class="s1"> contactFormStatus = document.getElementById(</span><span class="s7">'form-status'</span><span class="s1">);</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                            </span></span><span class="s12">if</span><span class="s4"> (skillsContainer) skillsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Authentication failed. Cannot load skills.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                            </span></span><span class="s12">if</span><span class="s4"> (projectsContainer) projectsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Authentication failed. Cannot load projects.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s12">if</span><span class="s1"> (contactFormStatus) contactFormStatus.innerHTML = </span><span class="s7">'&lt;p class="text-red-500"&gt;Authentication failed. Contact form disabled.&lt;/p&gt;'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s12">const</span><span class="s1"> submitButton = document.getElementById(</span><span class="s7">'submit-button'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span></span><span class="s12">if</span><span class="s1"> (submitButton) submitButton.disabled = </span><span class="s12">true</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
+<p class="p7"><span class="s11"></span><br></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Listen for auth state changes</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>onAuthStateChanged(auth, (user) =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (user) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>userId = user.uid;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>console.log(</span><span class="s7">"Auth state changed: User logged in. User ID:"</span><span class="s1">, userId); </span><span class="s10">// Debugging: User ID</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>} </span><span class="s12">else</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>userId = crypto.randomUUID(); </span><span class="s10">// Fallback for truly anonymous or if sign-in fails</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>console.log(</span><span class="s1">"Auth state changed: No user, generated anonymous ID:"</span><span class="s4">, userId); </span><span class="s10">// Debugging: Anonymous ID</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>isAuthReady = </span><span class="s12">true</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.log(</span><span class="s7">"Firebase Auth Ready. User ID:"</span><span class="s1">, userId);</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s1">// After auth is ready, load dynamic content</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>loadSkills();</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>loadProjects();</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
+<p class="p7"><span class="s11"></span><br></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>signInUser(); </span><span class="s10">// Initiate sign-in</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>} </span><span class="s12">catch</span><span class="s1"> (initError) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>console.error(</span><span class="s7">"Firebase initialization failed:"</span><span class="s1">, initError);</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// If initialization itself fails, display a message</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>document.addEventListener(</span><span class="s7">'DOMContentLoaded'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">const</span><span class="s1"> skillsContainer = document.getElementById(</span><span class="s7">'skills-container'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">const</span><span class="s1"> projectsContainer = document.getElementById(</span><span class="s7">'projects-container'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">const</span><span class="s1"> contactFormStatus = document.getElementById(</span><span class="s7">'form-status'</span><span class="s1">);</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s4"> (skillsContainer) skillsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Firebase initialization failed. Skills cannot be loaded.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s4"> (projectsContainer) projectsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Firebase initialization failed. Projects cannot be loaded.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s4"> (contactFormStatus) contactFormStatus.innerHTML = </span><span class="s1">'&lt;p class="text-red-500"&gt;Firebase initialization failed. Contact form disabled.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">const</span><span class="s1"> submitButton = document.getElementById(</span><span class="s7">'submit-button'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (submitButton) submitButton.disabled = </span><span class="s12">true</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// --- Navigation Toggle ---</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>document.addEventListener(</span><span class="s7">'DOMContentLoaded'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span>console.log(</span><span class="s1">"DOMContentLoaded fired - Main script part."</span><span class="s4">); </span><span class="s10">// Debugging: Confirm DOMContentLoaded</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> navbarToggle = document.getElementById(</span><span class="s7">'navbar-toggle'</span><span class="s1">);</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> navbarLinks = document.getElementById(</span><span class="s7">'navbar-links'</span><span class="s1">);</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> navbarToggleIcon = document.getElementById(</span><span class="s7">'navbar-toggle-icon'</span><span class="s1">);</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> navLinks = document.querySelectorAll(</span><span class="s7">'.nav-link'</span><span class="s1">);</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>navbarToggle.addEventListener(</span><span class="s7">'click'</span><span class="s1">, () =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>navbarLinks.classList.toggle(</span><span class="s7">'hidden'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s10">// Toggle icon</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s1"> (navbarLinks.classList.contains(</span><span class="s7">'hidden'</span><span class="s1">)) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>navbarToggleIcon.setAttribute(</span><span class="s7">'d'</span><span class="s1">, </span><span class="s7">'M4 6h16M4 12h16M4 18h16'</span><span class="s1">); </span><span class="s10">// Hamburger</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} </span><span class="s12">else</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>navbarToggleIcon.setAttribute(</span><span class="s7">'d'</span><span class="s1">, </span><span class="s7">'M6 18L18 6M6 6l12 12'</span><span class="s1">); </span><span class="s10">// X</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (navbarToggle &amp;&amp; navbarLinks &amp;&amp; navbarToggleIcon) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>navbarToggle.addEventListener(</span><span class="s7">'click'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>navbarLinks.classList.toggle(</span><span class="s7">'hidden'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s10">// Toggle icon</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (navbarLinks.classList.contains(</span><span class="s7">'hidden'</span><span class="s1">)) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>navbarToggleIcon.setAttribute(</span><span class="s7">'d'</span><span class="s1">, </span><span class="s7">'M4 6h16M4 12h16M4 18h16'</span><span class="s1">); </span><span class="s10">// Hamburger</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>} </span><span class="s12">else</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>navbarToggleIcon.setAttribute(</span><span class="s7">'d'</span><span class="s1">, </span><span class="s7">'M6 18L18 6M6 6l12 12'</span><span class="s1">); </span><span class="s10">// X</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">// Close navbar on link click for mobile</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>navLinks.forEach(link =&gt; {</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>link.addEventListener(</span><span class="s7">'click'</span><span class="s1">, () =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (!navbarLinks.classList.contains(</span><span class="s7">'hidden'</span><span class="s1">)) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (navbarLinks &amp;&amp; !navbarLinks.classList.contains(</span><span class="s7">'hidden'</span><span class="s1">)) {</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>navbarLinks.classList.add(</span><span class="s7">'hidden'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>navbarToggleIcon.setAttribute(</span><span class="s7">'d'</span><span class="s1">, </span><span class="s7">'M4 6h16M4 12h16M4 18h16'</span><span class="s1">); </span><span class="s10">// Reset to Hamburger</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">if</span><span class="s1"> (navbarToggleIcon) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>navbarToggleIcon.setAttribute(</span><span class="s7">'d'</span><span class="s1">, </span><span class="s7">'M4 6h16M4 12h16M4 18h16'</span><span class="s1">); </span><span class="s10">// Reset to Hamburger</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>});</span></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">// Update current year in footer</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>document.getElementById(</span><span class="s7">'current-year'</span><span class="s1">).textContent = </span><span class="s12">new</span><span class="s1"> </span><span class="s13">Date</span><span class="s1">().getFullYear();</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> currentYearSpan = document.getElementById(</span><span class="s7">'current-year'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (currentYearSpan) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>currentYearSpan.textContent = </span><span class="s12">new</span><span class="s1"> </span><span class="s13">Date</span><span class="s1">().getFullYear();</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// --- Load Skills from Firestore ---</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">async</span><span class="s1"> </span><span class="s12">function</span><span class="s1"> loadSkills() {</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span>console.log(</span><span class="s7">"Attempting to load skills..."</span><span class="s4">); </span><span class="s1">// Debugging: Check if loadSkills is called</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> skillsContainer = document.getElementById(</span><span class="s7">'skills-container'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (!db || !isAuthReady) {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>skillsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Firebase not initialized or authenticated. Cannot load skills.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (!db || !isAuthReady || !skillsContainer) {</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s4"> (skillsContainer) skillsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Firebase not ready or container missing. Cannot load skills.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>console.log(</span><span class="s1">"loadSkills: Firebase not ready or container missing."</span><span class="s4">); </span><span class="s10">// Debugging: Reason for not loading</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">return</span><span class="s1">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> collectionPath = </span><span class="s7">`artifacts/</span><span class="s1">${appId}</span><span class="s7">/public/data/skills`</span><span class="s1">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> skillsRef = collection(db, collectionPath);</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">// Seed data if collection is empty</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> snapshot = </span><span class="s12">await</span><span class="s1"> getDocs(skillsRef);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (snapshot.empty) {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>console.log(</span><span class="s1">"Seeding initial skills data..."</span><span class="s4">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"ArcGIS Pro"</span><span class="s1">, category: </span><span class="s7">"Software"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"QGIS"</span><span class="s1">, category: </span><span class="s7">"Software"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Python (Geopandas, GDAL)"</span><span class="s1">, category: </span><span class="s7">"Programming"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"JavaScript (Leaflet, OpenLayers)"</span><span class="s1">, category: </span><span class="s7">"Programming"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"PostgreSQL/PostGIS"</span><span class="s1">, category: </span><span class="s7">"Databases"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Remote Sensing"</span><span class="s1">, category: </span><span class="s7">"Analysis"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Spatial Analysis"</span><span class="s1">, category: </span><span class="s7">"Analysis"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Web Mapping"</span><span class="s1">, category: </span><span class="s7">"Development"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Data Visualization"</span><span class="s1">, category: </span><span class="s7">"Analysis"</span><span class="s1"> });</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Drone Mapping"</span><span class="s1">, category: </span><span class="s7">"Data Acquisition"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">try</span><span class="s1"> {</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Seed data if collection is empty</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> snapshot = </span><span class="s12">await</span><span class="s1"> getDocs(skillsRef);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s1"> (snapshot.empty) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.log(</span><span class="s7">"Seeding initial skills data..."</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"ArcGIS Pro"</span><span class="s1">, category: </span><span class="s7">"Software"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"QGIS"</span><span class="s1">, category: </span><span class="s7">"Software"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Python (Geopandas, GDAL)"</span><span class="s1">, category: </span><span class="s7">"Programming"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"JavaScript (Leaflet, OpenLayers)"</span><span class="s1">, category: </span><span class="s7">"Programming"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"PostgreSQL/PostGIS"</span><span class="s1">, category: </span><span class="s7">"Databases"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Remote Sensing"</span><span class="s1">, category: </span><span class="s7">"Analysis"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Spatial Analysis"</span><span class="s1">, category: </span><span class="s7">"Analysis"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Web Mapping"</span><span class="s1">, category: </span><span class="s7">"Development"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Data Visualization"</span><span class="s1">, category: </span><span class="s7">"Analysis"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(skillsRef, { name: </span><span class="s7">"Drone Mapping"</span><span class="s1">, category: </span><span class="s7">"Data Acquisition"</span><span class="s1"> });</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.log(</span><span class="s7">"Initial skills data seeded."</span><span class="s1">); </span><span class="s10">// Debugging: Confirm seeding</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>} </span><span class="s12">catch</span><span class="s1"> (seedError) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>console.error(</span><span class="s7">"Error seeding skills data:"</span><span class="s1">, seedError);</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Continue to try loading, but acknowledge seed failed</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p7"><span class="s11"></span><br></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>onSnapshot(query(skillsRef), (snapshot) =&gt; {</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">try</span><span class="s1"> {</span></p>
@@ -404,8 +471,9 @@
 <p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>`</span><span class="s4">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>skillsContainer.innerHTML = htmlContent;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.log(</span><span class="s7">"Skills loaded and rendered."</span><span class="s1">); </span><span class="s10">// Debugging: Confirm rendering</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} </span><span class="s12">catch</span><span class="s1"> (err) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.error(</span><span class="s7">"Error fetching skills:"</span><span class="s1">, err);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.error(</span><span class="s7">"Error rendering skills:"</span><span class="s1">, err);</span></p>
 <p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>skillsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Failed to load skills.&lt;/p&gt;'</span><span class="s4">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}, (err) =&gt; {</span></p>
@@ -416,38 +484,47 @@
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// --- Load Projects from Firestore ---</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s12">async</span><span class="s1"> </span><span class="s12">function</span><span class="s1"> loadProjects() {</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span>console.log(</span><span class="s7">"Attempting to load projects..."</span><span class="s4">); </span><span class="s1">// Debugging: Check if loadProjects is called</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> projectsContainer = document.getElementById(</span><span class="s7">'projects-container'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (!db || !isAuthReady) {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>projectsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Firebase not initialized or authenticated. Cannot load projects.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (!db || !isAuthReady || !projectsContainer) {</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s4"> (projectsContainer) projectsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Firebase not ready or container missing. Cannot load projects.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>console.log(</span><span class="s1">"loadProjects: Firebase not ready or container missing."</span><span class="s4">); </span><span class="s10">// Debugging: Reason for not loading</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">return</span><span class="s1">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> collectionPath = </span><span class="s7">`artifacts/</span><span class="s1">${appId}</span><span class="s7">/public/data/projects`</span><span class="s1">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> projectsRef = collection(db, collectionPath);</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">// Seed data if collection is empty</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> snapshot = </span><span class="s12">await</span><span class="s1"> getDocs(projectsRef);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (snapshot.empty) {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>console.log(</span><span class="s1">"Seeding initial projects data..."</span><span class="s4">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(projectsRef, {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>title: </span><span class="s7">"Urban Green Space Analysis"</span><span class="s1">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>description: </span><span class="s1">"Analyzed urban green space distribution and accessibility using satellite imagery and demographic data."</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://placehold.co/600x400/C8E6C9/000000?text=Urban+Green"</span><span class="s4">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>link: </span><span class="s7">"#"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(projectsRef, {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>title: </span><span class="s1">"Web-Based Flood Risk Viewer"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>description: </span><span class="s1">"Developed an interactive web map application to visualize flood risk zones and vulnerable populations."</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://placehold.co/600x400/B3E5FC/000000?text=Flood+Risk"</span><span class="s4">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>link: </span><span class="s7">"#"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(projectsRef, {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>title: </span><span class="s1">"Automated Land Cover Classification"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>description: </span><span class="s1">"Implemented a Python script using machine learning to automate land cover classification from aerial photos."</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>imageUrl: </span><span class="s1">"https://placehold.co/600x400/FFECB3/000000?text=Land+Cover"</span><span class="s4">,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>link: </span><span class="s7">"#"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">try</span><span class="s1"> {</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Seed data if collection is empty</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> snapshot = </span><span class="s12">await</span><span class="s1"> getDocs(projectsRef);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">if</span><span class="s1"> (snapshot.empty) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.log(</span><span class="s7">"Seeding initial projects data..."</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(projectsRef, {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>title: </span><span class="s7">"Urban Green Space Analysis"</span><span class="s1">,</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>description: </span><span class="s1">"Analyzed urban green space distribution and accessibility using satellite imagery and demographic data."</span><span class="s4">,</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>imageUrl: </span><span class="s1">"https://placehold.co/600x400/C8E6C9/000000?text=Urban+Green"</span><span class="s4">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>link: </span><span class="s7">"#"</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(projectsRef, {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>title: </span><span class="s7">"Web-Based Flood Risk Viewer"</span><span class="s1">,</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>description: </span><span class="s1">"Developed an interactive web map application to visualize flood risk zones and vulnerable populations."</span><span class="s4">,</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>imageUrl: </span><span class="s1">"https://placehold.co/600x400/B3E5FC/000000?text=Flood+Risk"</span><span class="s4">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>link: </span><span class="s7">"#"</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">await</span><span class="s1"> addDoc(projectsRef, {</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>title: </span><span class="s1">"Automated Land Cover Classification"</span><span class="s4">,</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>description: </span><span class="s1">"Implemented a Python script using machine learning to automate land cover classification from aerial photos."</span><span class="s4">,</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>imageUrl: </span><span class="s1">"https://placehold.co/600x400/FFECB3/000000?text=Land+Cover"</span><span class="s4">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>link: </span><span class="s7">"#"</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.log(</span><span class="s7">"Initial projects data seeded."</span><span class="s1">); </span><span class="s10">// Debugging: Confirm seeding</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>} </span><span class="s12">catch</span><span class="s1"> (seedError) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>console.error(</span><span class="s7">"Error seeding projects data:"</span><span class="s1">, seedError);</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Continue to try loading, but acknowledge seed failed</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p7"><span class="s11"></span><br></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>onSnapshot(query(projectsRef), (snapshot) =&gt; {</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">try</span><span class="s1"> {</span></p>
@@ -488,8 +565,9 @@
 <p class="p8"><span class="s1"><span class="Apple-converted-space">                        </span>`</span><span class="s4">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>});</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>projectsContainer.innerHTML = htmlContent;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.log(</span><span class="s7">"Projects loaded and rendered."</span><span class="s1">); </span><span class="s10">// Debugging: Confirm rendering</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>} </span><span class="s12">catch</span><span class="s1"> (err) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.error(</span><span class="s7">"Error fetching projects:"</span><span class="s1">, err);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>console.error(</span><span class="s7">"Error rendering projects:"</span><span class="s1">, err);</span></p>
 <p class="p8"><span class="s4"><span class="Apple-converted-space">                    </span>projectsContainer.innerHTML = </span><span class="s1">'&lt;p class="text-center text-red-500 col-span-full"&gt;Failed to load projects.&lt;/p&gt;'</span><span class="s4">;</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}, (err) =&gt; {</span></p>
@@ -499,40 +577,51 @@
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
 <p class="p7"><span class="s11"></span><br></p>
 <p class="p6"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// --- Contact Form Submission ---</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>document.getElementById(</span><span class="s7">'contact-form'</span><span class="s1">).addEventListener(</span><span class="s7">'submit'</span><span class="s1">, </span><span class="s12">async</span><span class="s1"> (e) =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>e.preventDefault();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> formStatus = document.getElementById(</span><span class="s7">'form-status'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> submitButton = document.getElementById(</span><span class="s7">'submit-button'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>document.addEventListener(</span><span class="s7">'DOMContentLoaded'</span><span class="s1">, () =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> contactForm = document.getElementById(</span><span class="s7">'contact-form'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (contactForm) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>contactForm.addEventListener(</span><span class="s7">'submit'</span><span class="s1">, </span><span class="s12">async</span><span class="s1"> (e) =&gt; {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>e.preventDefault();</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">const</span><span class="s1"> formStatus = document.getElementById(</span><span class="s7">'form-status'</span><span class="s1">);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">const</span><span class="s1"> submitButton = document.getElementById(</span><span class="s7">'submit-button'</span><span class="s1">);</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">if</span><span class="s1"> (!db || !isAuthReady) {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>formStatus.innerHTML = </span><span class="s1">'&lt;p class="text-red-500"&gt;Firebase not initialized or authenticated. Cannot send message.&lt;/p&gt;'</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">return</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (!db || !isAuthReady) {</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s12">if</span><span class="s4"> (formStatus) formStatus.innerHTML = </span><span class="s1">'&lt;p class="text-red-500"&gt;Firebase not initialized or authenticated. Cannot send message.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span>console.log(</span><span class="s1">"Contact form submission: Firebase not ready."</span><span class="s4">); </span><span class="s10">// Debugging: Reason for not submitting</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">return</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>submitButton.disabled = </span><span class="s12">true</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>submitButton.textContent = </span><span class="s7">'Sending...'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>formStatus.innerHTML = </span><span class="s7">''</span><span class="s1">; </span><span class="s10">// Clear previous status</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (submitButton) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>submitButton.disabled = </span><span class="s12">true</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>submitButton.textContent = </span><span class="s7">'Sending...'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">if</span><span class="s1"> (formStatus) formStatus.innerHTML = </span><span class="s7">''</span><span class="s1">; </span><span class="s10">// Clear previous status</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">const</span><span class="s1"> formData = {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>name: document.getElementById(</span><span class="s7">'name'</span><span class="s1">).value,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>email: document.getElementById(</span><span class="s7">'email'</span><span class="s1">).value,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>message: document.getElementById(</span><span class="s7">'message'</span><span class="s1">).value,</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>timestamp: </span><span class="s12">new</span><span class="s1"> </span><span class="s13">Date</span><span class="s1">(),</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">                </span>userId: userId </span><span class="s1">// Store the user ID who sent the message</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">const</span><span class="s1"> formData = {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>name: document.getElementById(</span><span class="s7">'name'</span><span class="s1">)?.value || </span><span class="s7">''</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>email: document.getElementById(</span><span class="s7">'email'</span><span class="s1">)?.value || </span><span class="s7">''</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>message: document.getElementById(</span><span class="s7">'message'</span><span class="s1">)?.value || </span><span class="s7">''</span><span class="s1">,</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>timestamp: </span><span class="s12">new</span><span class="s1"> </span><span class="s13">Date</span><span class="s1">(),</span></p>
+<p class="p6"><span class="s4"><span class="Apple-converted-space">                        </span>userId: userId </span><span class="s1">// Store the user ID who sent the message</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>};</span></p>
 <p class="p7"><span class="s11"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s12">try</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">const</span><span class="s1"> collectionPath = </span><span class="s7">`artifacts/</span><span class="s1">${appId}</span><span class="s7">/public/data/messages`</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s12">await</span><span class="s1"> addDoc(collection(db, collectionPath), formData);</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>formStatus.innerHTML = </span><span class="s1">'&lt;p class="text-green-600"&gt;Message sent successfully!&lt;/p&gt;'</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>document.getElementById(</span><span class="s7">'contact-form'</span><span class="s1">).reset(); </span><span class="s10">// Clear form</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; formStatus.innerHTML = </span><span class="s7">''</span><span class="s1">, </span><span class="s14">3000</span><span class="s1">); </span><span class="s10">// Clear status after 3 seconds</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>} </span><span class="s12">catch</span><span class="s1"> (error) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>console.error(</span><span class="s7">"Error sending message:"</span><span class="s1">, error);</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>formStatus.innerHTML = </span><span class="s1">'&lt;p class="text-red-500"&gt;Failed to send message. Please try again.&lt;/p&gt;'</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>} </span><span class="s12">finally</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>submitButton.disabled = </span><span class="s12">false</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>submitButton.textContent = </span><span class="s7">'Send Message'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span></span><span class="s12">try</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">const</span><span class="s1"> collectionPath = </span><span class="s7">`artifacts/</span><span class="s1">${appId}</span><span class="s7">/public/data/messages`</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">await</span><span class="s1"> addDoc(collection(db, collectionPath), formData);</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">if</span><span class="s1"> (formStatus) formStatus.innerHTML = </span><span class="s7">'&lt;p class="text-green-600"&gt;Message sent successfully!&lt;/p&gt;'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">if</span><span class="s1"> (contactForm) contactForm.reset(); </span><span class="s10">// Clear form</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>setTimeout(() =&gt; { </span><span class="s12">if</span><span class="s1"> (formStatus) formStatus.innerHTML = </span><span class="s7">''</span><span class="s1">; }, </span><span class="s14">3000</span><span class="s1">); </span><span class="s10">// Clear status after 3 seconds</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>console.log(</span><span class="s7">"Contact message sent successfully."</span><span class="s1">); </span><span class="s10">// Debugging: Confirm message sent</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>} </span><span class="s12">catch</span><span class="s1"> (error) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>console.error(</span><span class="s7">"Error sending message:"</span><span class="s1">, error);</span></p>
+<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s12">if</span><span class="s4"> (formStatus) formStatus.innerHTML = </span><span class="s1">'&lt;p class="text-red-500"&gt;Failed to send message. Please try again.&lt;/p&gt;'</span><span class="s4">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>} </span><span class="s12">finally</span><span class="s1"> {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span></span><span class="s12">if</span><span class="s1"> (submitButton) {</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>submitButton.disabled = </span><span class="s12">false</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                            </span>submitButton.textContent = </span><span class="s7">'Send Message'</span><span class="s1">;</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}</span></p>
+<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>});</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
 <p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
 <p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
